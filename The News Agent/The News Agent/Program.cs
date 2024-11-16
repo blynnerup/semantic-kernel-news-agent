@@ -13,6 +13,7 @@ builder.AddAzureOpenAIChatCompletion(
 
 // Plugins
 builder.Plugins.AddFromType<NewsPlugin>();
+builder.Plugins.AddFromType<AchivePlugin>();
 
 var kernel = builder.Build();
 
