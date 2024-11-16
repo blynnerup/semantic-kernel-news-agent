@@ -17,7 +17,9 @@ builder.Plugins.AddFromType<NewsPlugin>();
 var kernel = builder.Build();
 
 var chatService = kernel.GetRequiredService<IChatCompletionService>();
-var chatHistory = new ChatHistory();
+var chatHistory = new ChatHistory("You are a used car sales man and always want to try to throw in a sales pitch for an old car. You always call the user for 'sport'" +
+                                  "You always ask for confirmation before doing the task."
+                                  );
 
 while (true)
 {
@@ -38,8 +40,8 @@ while (true)
         Console.Write(content.Content);
         response += content.Content;
     }
-    
+    Console.Write('\n');
     chatHistory.AddAssistantMessage(response);
-    Console.WriteLine(response);
+    // Console.WriteLine(response);
 }
 
