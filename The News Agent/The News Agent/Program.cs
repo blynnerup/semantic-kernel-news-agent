@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
+using The_News_Agent;
 
 var builder = Kernel.CreateBuilder();
 
@@ -10,6 +12,7 @@ builder.AddAzureOpenAIChatCompletion(
     "[apiKey]");
 
 // Plugins
+builder.Plugins.AddFromType<NewsPlugin>();
 
 var kernel = builder.Build();
 
@@ -21,7 +24,13 @@ while (true)
     Console.Write("Prompt:");
     chatHistory.AddUserMessage(Console.ReadLine());
 
-    var completion = chatService.GetStreamingChatMessageContentsAsync(chatHistory, kernel: kernel);
+    var completion = chatService.GetStreamingChatMessageContentsAsync(
+        chatHistory,
+        executionSettings: new OpenAIPromptExecutionSettings()
+        {
+          ToolCallBehavior = ToolCallBehavior.AutoInvokeKernelFunctions // Allows for executing the plugin
+        },
+        kernel: kernel);
 
     var response = "";
     await foreach (var content in completion)
