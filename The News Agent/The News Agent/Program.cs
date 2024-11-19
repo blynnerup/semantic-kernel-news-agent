@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;using Microsoft.SemanticKernel;
+﻿using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using The_News_Agent;
